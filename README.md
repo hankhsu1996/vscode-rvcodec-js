@@ -74,11 +74,14 @@ sw x0, 32(x0)    // Store word: mem[x0 + 32] = x0
 
 ## License
 
-MIT License - feel free to use and modify!
+GNU Affero General Public License v3 - see the [LICENSE](LICENSE) file for details
+
+This extension uses [rvcodecjs](https://gitlab.com/luplab/rvcodecjs) which is licensed under GNU AGPL v3.
 
 ## Credits
 
-Icon: [Programming language icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/programming-language)
+- [rvcodecjs](https://gitlab.com/luplab/rvcodecjs) - RISC-V instruction encoding/decoding library by LupLab (GNU AGPL v3)
+- Icon: [Programming language icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/programming-language)
 
 ## Contributing
 

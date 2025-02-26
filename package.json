@@ -8,7 +8,7 @@
     "name": "Shou-Li Hsu",
     "email": "hank850503@gmail.com"
   },
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/hankhsu1996/vscode-rvcodec-js"
