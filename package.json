@@ -1,7 +1,7 @@
 {
   "name": "rvcodec-js",
   "displayName": "rvcodec.js",
-  "description": "RISC-V instruction encoder/decoder that visualizes assembly-to-binary mappings directly in VSCode.",
+  "description": "RISC-V instruction encoder/decoder",
   "version": "0.0.3",
   "publisher": "hankhsu1996",
   "author": {
