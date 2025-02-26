@@ -18,6 +18,7 @@
  * The source code is available at: https://github.com/hankhsu1996/vscode-rvcodec-js
  */
 
+import * as vscode from "vscode";
 import { Instruction } from "rvcodecjs/core/Instruction.js";
 
 export interface InstructionDetails {
@@ -37,7 +38,10 @@ export class RVCodecWrapper {
   static async decode(hexInstruction: string): Promise<InstructionDetails> {
     try {
       const { Instruction } = await import("rvcodecjs/core/Instruction.js");
-      const inst = new Instruction(hexInstruction);
+      const config = vscode.workspace.getConfiguration("rvcodec-js");
+      const useAbiNames = config.get<boolean>("useAbiNames") ?? true;
+
+      const inst = new Instruction(hexInstruction, { ABI: useAbiNames });
 
       return {
         assembly: inst.asm,
@@ -66,12 +70,14 @@ export class RVCodecWrapper {
 
     try {
       const { Instruction } = await import("rvcodecjs/core/Instruction.js");
+      const config = vscode.workspace.getConfiguration("rvcodec-js");
+      const useAbiNames = config.get<boolean>("useAbiNames") ?? true;
 
       // Clean up the input string
       const cleanAssembly = assembly.trim().toLowerCase();
 
       // Create a new instruction
-      const inst = new Instruction(cleanAssembly);
+      const inst = new Instruction(cleanAssembly, { ABI: useAbiNames });
 
       // Validate that we got a valid instruction
       if (!inst.asm || !inst.hex) {

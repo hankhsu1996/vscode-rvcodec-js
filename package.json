@@ -40,6 +40,11 @@
           "type": "boolean",
           "default": true,
           "description": "Enable hover previews for RISC-V instruction decoding"
+        },
+        "rvcodec-js.useAbiNames": {
+          "type": "boolean",
+          "default": false,
+          "description": "Use ABI register names (a0, sp) instead of numeric names (x10, x2)"
         }
       }
     },

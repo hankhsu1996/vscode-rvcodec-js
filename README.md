@@ -30,31 +30,10 @@ The hover feature can be disabled in VSCode settings (`rvcodec-js.enableHover`).
    - Instruction format
    - ISA type
 
-## Examples
+## Settings
 
-### Encoding
-```
-addi x15, x1, -50    // Add immediate value -50 to x1, store in x15
-```
-Results in:
-```
-Assembly: addi x15, x1, -50
-Binary:   11111111110100001000011110010011
-Hex:      ffd08793
-Format:   I-type
-ISA:      RV32I
-```
-
-### Decoding (via hover)
-Hover over `0x00A02023` to see:
-```
-sw x0, 32(x0)    // Store word: mem[x0 + 32] = x0
-
-💾 Binary: 00000000101000000010000000100011
-🔢 Hexadecimal: 00a02023
-🧩 Format: S-type
-⚡ Instruction Set: RV32I
-```
+- `rvcodec-js.enableHover`: Enable/disable instruction decoding on hover
+- `rvcodec-js.useAbiNames`: Use ABI names (a0, sp) instead of numeric (x10, x2)
 
 ## Installation
 
@@ -63,27 +42,14 @@ sw x0, 32(x0)    // Store word: mem[x0 + 32] = x0
 3. Search for "RISC-V Encoder/Decoder"
 4. Click Install
 
-## Usage Tips
-
-- Works in any text file - perfect for:
-  - Writing assembly code
-  - Debugging compiled programs
-  - Teaching/learning RISC-V
-  - Documentation
-  - Code comments
-- Supports standard RISC-V instructions (RV32I base + extensions)
-- No setup needed - just install and start using
-
 ## License
 
-GNU Affero General Public License v3 - see the [LICENSE](LICENSE) file for details
-
-This extension uses [rvcodecjs](https://gitlab.com/luplab/rvcodecjs) which is licensed under GNU AGPL v3.
+This project is licensed under GNU Affero General Public License v3 - see the [LICENSE](LICENSE) file for details.
 
 ## Credits
 
-- [rvcodecjs](https://gitlab.com/luplab/rvcodecjs) - RISC-V instruction encoding/decoding library by LupLab (GNU AGPL v3)
-- Icon: [Programming language icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/programming-language)
+- Built with [rvcodecjs](https://gitlab.com/luplab/rvcodecjs) by LupLab (GNU AGPL v3)
+- Icon from [Flaticon](https://www.flaticon.com/free-icons/programming-language) by Freepik
 
 ## Contributing
 
