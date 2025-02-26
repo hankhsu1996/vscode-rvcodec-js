@@ -31,6 +31,12 @@ export function registerHoverProvider() {
         document: vscode.TextDocument,
         position: vscode.Position,
       ) {
+        // Check if hover is enabled in settings
+        const config = vscode.workspace.getConfiguration("rvcodec-js");
+        if (!config.get("enableHover")) {
+          return;
+        }
+
         const line = document.lineAt(position).text;
         const wordRange = document.getWordRangeAtPosition(position);
         if (!wordRange) {

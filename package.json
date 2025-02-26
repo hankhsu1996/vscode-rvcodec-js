@@ -33,6 +33,16 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "RISC-V Encoder/Decoder",
+      "properties": {
+        "rvcodec-js.enableHover": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable hover previews for RISC-V instruction decoding"
+        }
+      }
+    },
     "commands": [
       {
         "command": "rvcodec-js.encode",

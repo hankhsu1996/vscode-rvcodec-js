@@ -18,6 +18,8 @@ Supports common hex formats:
 32'h00A02023  // Even works with SystemVerilog format!
 ```
 
+The hover feature can be disabled in VSCode settings (`rvcodec-js.enableHover`).
+
 ### ⚡ Quick Encode
 1. Select an assembly instruction
 2. Right-click and choose "RISC-V: Encode Instruction" (or use Command Palette)
