@@ -20,7 +20,7 @@
 
 import { Instruction } from "rvcodecjs/core/Instruction.js";
 
-interface InstructionDetails {
+export interface InstructionDetails {
   assembly: string;
   details: {
     hex: string;

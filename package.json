@@ -37,6 +37,10 @@
       {
         "command": "rvcodec-js.encode",
         "title": "RISC-V: Encode Instruction"
+      },
+      {
+        "command": "rvcodec-js.decode",
+        "title": "RISC-V: Decode Instruction"
       }
     ],
     "menus": {
@@ -44,6 +48,11 @@
         {
           "when": "editorHasSelection",
           "command": "rvcodec-js.encode",
+          "group": "1_modification"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "rvcodec-js.decode",
           "group": "1_modification"
         }
       ]
