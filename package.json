@@ -1,0 +1,67 @@
+{
+  "name": "rvcodec-js",
+  "displayName": "rvcodec.js",
+  "description": "RISC-V instruction encoder/decoder that visualizes assembly-to-binary mappings directly in VSCode.",
+  "version": "0.0.1",
+  "publisher": "hankhsu1996",
+  "author": {
+    "name": "Shou-Li Hsu",
+    "email": "hank850503@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hankhsu1996/vscode-rvcodec-js"
+  },
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Education"
+  ],
+  "keywords": [
+    "risc-v",
+    "riscv",
+    "assembly",
+    "encoder",
+    "decoder"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "rvcodec-js.encode",
+        "title": "RISC-V: Encode Instruction"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "rvcodec-js.encode",
+          "group": "1_modification"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "format": "prettier --write \"src/**/*.{ts,js}\""
+  },
+  "dependencies": {
+    "rvcodecjs": "gitlab:luplab/rvcodecjs"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "20.x",
+    "typescript": "^5.4.5",
+    "prettier": "^3.2.5"
+  }
+}
