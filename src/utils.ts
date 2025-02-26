@@ -22,6 +22,16 @@ import * as vscode from "vscode";
 import { InstructionDetails } from "./rvcodec-wrapper";
 
 /**
+ * Extract hex value from regex match, handling capture groups and underscores
+ */
+export function extractHexValue(match: RegExpMatchArray): string | undefined {
+  return match
+    .slice(1)
+    .find((group) => group !== undefined)
+    ?.replace(/_/g, "");
+}
+
+/**
  * Format instruction details as plain text for output channel
  */
 export function formatPlainText(

@@ -1,5 +1,14 @@
 # Change Log
 
+## [0.0.4] - 2025-01-XX
+
+### Added
+- Inline assembly decoding feature that shows decoded instructions next to hex values
+- New setting `enableInlineDecoding` to control inline decoding (enabled by default)
+
+### Changed
+- Hover feature is now disabled by default for better performance
+
 ## [0.0.3] - 2025-02-26
 
 ### Changed

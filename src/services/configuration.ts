@@ -1,6 +1,6 @@
 /**
  * RISC-V instruction encoder/decoder VSCode extension
- * Copyright (C) 2025 Shou-Li Hsu
+ * Copyright (C) 2024 Shou-Li Hsu
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,6 +18,24 @@
  * The source code is available at: https://github.com/hankhsu1996/vscode-rvcodec-js
  */
 
-// Single regex pattern for all hex formats using alternation
-export const HEX_PATTERN =
-  /\b(?:0x([0-9A-Fa-f]{8})|32'h([0-9A-Fa-f_]{1,8})|'h([0-9A-Fa-f]{8}))\b/;
+import * as vscode from "vscode";
+
+export class ConfigurationService {
+  private static readonly SECTION = "rvcodec-js";
+
+  private static getConfiguration() {
+    return vscode.workspace.getConfiguration(this.SECTION);
+  }
+
+  static get isHoverEnabled(): boolean {
+    return this.getConfiguration().get<boolean>("enableHover") ?? false;
+  }
+
+  static get isInlineDecodingEnabled(): boolean {
+    return this.getConfiguration().get<boolean>("enableInlineDecoding") ?? true;
+  }
+
+  static get useAbiNames(): boolean {
+    return this.getConfiguration().get<boolean>("useAbiNames") ?? false;
+  }
+}

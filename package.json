@@ -2,7 +2,7 @@
   "name": "rvcodec-js",
   "displayName": "rvcodec.js",
   "description": "RISC-V instruction encoder/decoder",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "hankhsu1996",
   "author": {
     "name": "Shou-Li Hsu",
@@ -38,8 +38,13 @@
       "properties": {
         "rvcodec-js.enableHover": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Enable hover previews for RISC-V instruction decoding"
+        },
+        "rvcodec-js.enableInlineDecoding": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable inline decoding of RISC-V instructions"
         },
         "rvcodec-js.useAbiNames": {
           "type": "boolean",

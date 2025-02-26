@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand("rvcodec-js.encode", encodeCommand),
     vscode.commands.registerCommand("rvcodec-js.decode", decodeCommand),
-    registerHoverProvider()
+    registerHoverProvider(),
   );
 
   // Register inline decoder

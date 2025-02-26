@@ -22,46 +22,49 @@ import * as vscode from "vscode";
 import { RVCodecWrapper } from "./rvcodec-wrapper";
 import { HEX_PATTERN } from "./constants";
 import { formatMarkdown } from "./utils";
+import { ConfigurationService } from "./services/configuration";
 
 export function registerHoverProvider() {
-  return vscode.languages.registerHoverProvider(
-    "*",
-    {
-      async provideHover(
-        document: vscode.TextDocument,
-        position: vscode.Position,
-      ) {
-        // Check if hover is enabled in settings
-        const config = vscode.workspace.getConfiguration("rvcodec-js");
-        if (!config.get("enableHover")) {
-          return;
-        }
+  return vscode.languages.registerHoverProvider("*", {
+    async provideHover(
+      document: vscode.TextDocument,
+      position: vscode.Position,
+    ) {
+      // Check if hover is enabled in settings
+      if (!ConfigurationService.isHoverEnabled) {
+        return;
+      }
 
-        const line = document.lineAt(position).text;
-        const wordRange = document.getWordRangeAtPosition(position);
-        if (!wordRange) {
-          return;
-        }
+      const line = document.lineAt(position).text;
+      const wordRange = document.getWordRangeAtPosition(position);
+      if (!wordRange) {
+        return;
+      }
 
-        const match = line.match(HEX_PATTERN);
-        if (match) {
-          const word = line.slice(wordRange.start.character, wordRange.end.character);
-          // Check if the word at cursor is part of the matched hex pattern
-          if (match[0].includes(word)) {
-            // Find the first non-undefined capture group (the hex value)
-            const hexValue = match.slice(1).find(group => group !== undefined)?.replace(/_/g, "");
-            if (!hexValue) return;
+      const match = line.match(HEX_PATTERN);
+      if (match) {
+        const word = line.slice(
+          wordRange.start.character,
+          wordRange.end.character,
+        );
+        // Check if the word at cursor is part of the matched hex pattern
+        if (match[0].includes(word)) {
+          // Find the first non-undefined capture group (the hex value)
+          const hexValue = match
+            .slice(1)
+            .find((group) => group !== undefined)
+            ?.replace(/_/g, "");
+          if (!hexValue) return;
 
-            try {
-              const decoded = await RVCodecWrapper.decode(hexValue);
-              return new vscode.Hover(formatMarkdown(decoded));
-            } catch (error) {
-              // Invalid instruction - no hover
-              return;
-            }
+          try {
+            const decoded = await RVCodecWrapper.decode(hexValue);
+            return new vscode.Hover(formatMarkdown(decoded));
+          } catch (error) {
+            // Invalid instruction - no hover
+            return;
           }
         }
-      },
+      }
     },
-  );
+  });
 }

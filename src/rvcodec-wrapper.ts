@@ -20,6 +20,7 @@
 
 import * as vscode from "vscode";
 import { Instruction } from "rvcodecjs/core/Instruction.js";
+import { ConfigurationService } from "./services/configuration";
 
 export interface InstructionDetails {
   assembly: string;
@@ -38,8 +39,7 @@ export class RVCodecWrapper {
   static async decode(hexInstruction: string): Promise<InstructionDetails> {
     try {
       const { Instruction } = await import("rvcodecjs/core/Instruction.js");
-      const config = vscode.workspace.getConfiguration("rvcodec-js");
-      const useAbiNames = config.get<boolean>("useAbiNames") ?? true;
+      const useAbiNames = ConfigurationService.useAbiNames;
 
       const inst = new Instruction(hexInstruction, { ABI: useAbiNames });
 
@@ -70,8 +70,7 @@ export class RVCodecWrapper {
 
     try {
       const { Instruction } = await import("rvcodecjs/core/Instruction.js");
-      const config = vscode.workspace.getConfiguration("rvcodec-js");
-      const useAbiNames = config.get<boolean>("useAbiNames") ?? true;
+      const useAbiNames = ConfigurationService.useAbiNames;
 
       // Clean up the input string
       const cleanAssembly = assembly.trim().toLowerCase();

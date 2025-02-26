@@ -21,6 +21,7 @@
 import * as vscode from "vscode";
 import { RVCodecWrapper } from "../rvcodec-wrapper";
 import { formatPlainText } from "../utils";
+import { ErrorService } from "../services/error";
 
 export async function encodeCommand() {
   const editor = vscode.window.activeTextEditor;
@@ -32,7 +33,7 @@ export async function encodeCommand() {
   const text = editor.document.getText(selection);
 
   if (!text) {
-    vscode.window.showInformationMessage(
+    ErrorService.showInfo(
       "Please select a RISC-V assembly instruction to encode",
     );
     return;
@@ -45,10 +46,6 @@ export async function encodeCommand() {
     outputChannel.appendLine(formatPlainText(encoded, "Encoding"));
     outputChannel.show(true);
   } catch (error) {
-    if (error instanceof Error) {
-      vscode.window.showErrorMessage(
-        `Failed to encode instruction: ${error.message}`,
-      );
-    }
+    ErrorService.handleError(error, "Failed to encode instruction");
   }
 }

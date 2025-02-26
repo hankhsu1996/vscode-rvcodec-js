@@ -21,6 +21,9 @@
 import * as vscode from "vscode";
 import { RVCodecWrapper } from "./rvcodec-wrapper";
 import { HEX_PATTERN } from "./constants";
+import { ConfigurationService } from "./services/configuration";
+import { ErrorService } from "./services/error";
+import { extractHexValue } from "./utils";
 
 const inlineDecorationType = vscode.window.createTextEditorDecorationType({
   after: {
@@ -32,14 +35,14 @@ const inlineDecorationType = vscode.window.createTextEditorDecorationType({
 
 export function registerInlineDecoder() {
   // Update decorations when the active editor changes
-  vscode.window.onDidChangeActiveTextEditor(editor => {
+  vscode.window.onDidChangeActiveTextEditor((editor) => {
     if (editor) {
       updateDecorations(editor);
     }
   });
 
   // Update decorations when the document changes
-  vscode.workspace.onDidChangeTextDocument(event => {
+  vscode.workspace.onDidChangeTextDocument((event) => {
     const editor = vscode.window.activeTextEditor;
     if (editor && event.document === editor.document) {
       updateDecorations(editor);
@@ -53,6 +56,11 @@ export function registerInlineDecoder() {
 }
 
 async function updateDecorations(editor: vscode.TextEditor) {
+  // Check if inline decoding is enabled in settings
+  if (!ConfigurationService.isInlineDecodingEnabled) {
+    return;
+  }
+
   const decorations: vscode.DecorationOptions[] = [];
   const document = editor.document;
 
@@ -68,8 +76,7 @@ async function updateDecorations(editor: vscode.TextEditor) {
     const matches = text.matchAll(new RegExp(HEX_PATTERN, "g"));
     for (const match of matches) {
       if (!match.index) continue;
-      // Find the first non-undefined capture group (the hex value)
-      const hexValue = match.slice(1).find(group => group !== undefined)?.replace(/_/g, "");
+      const hexValue = extractHexValue(match);
       if (!hexValue) continue;
 
       try {
@@ -78,7 +85,7 @@ async function updateDecorations(editor: vscode.TextEditor) {
           lineNum,
           match.index,
           lineNum,
-          match.index + match[0].length
+          match.index + match[0].length,
         );
         decorations.push({
           range,
@@ -88,8 +95,8 @@ async function updateDecorations(editor: vscode.TextEditor) {
             },
           },
         });
-      } catch {
-        // Skip invalid instructions
+      } catch (error) {
+        // Skip invalid instructions silently
         continue;
       }
     }

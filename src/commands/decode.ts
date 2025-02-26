@@ -22,6 +22,8 @@ import * as vscode from "vscode";
 import { RVCodecWrapper } from "../rvcodec-wrapper";
 import { HEX_PATTERN } from "../constants";
 import { formatPlainText } from "../utils";
+import { ErrorService } from "../services/error";
+import { extractHexValue } from "../utils";
 
 export async function decodeCommand() {
   const editor = vscode.window.activeTextEditor;
@@ -33,23 +35,20 @@ export async function decodeCommand() {
   const text = editor.document.getText(selection);
 
   if (!text) {
-    vscode.window.showInformationMessage(
-      "Please select a hexadecimal instruction to decode",
-    );
+    ErrorService.showInfo("Please select a hexadecimal instruction to decode");
     return;
   }
 
   // Extract hex value from text
   const match = text.trim().match(HEX_PATTERN);
   if (!match) {
-    vscode.window.showErrorMessage("No valid hexadecimal instruction found");
+    ErrorService.showInfo("No valid hexadecimal instruction found");
     return;
   }
 
-  // Find the first non-undefined capture group (the hex value)
-  const hexValue = match.slice(1).find(group => group !== undefined)?.replace(/_/g, "");
+  const hexValue = extractHexValue(match);
   if (!hexValue) {
-    vscode.window.showErrorMessage("No valid hexadecimal instruction found");
+    ErrorService.showInfo("No valid hexadecimal instruction found");
     return;
   }
 
@@ -60,10 +59,6 @@ export async function decodeCommand() {
     outputChannel.appendLine(formatPlainText(decoded, "Decoding"));
     outputChannel.show(true);
   } catch (error) {
-    if (error instanceof Error) {
-      vscode.window.showErrorMessage(
-        `Failed to decode instruction: ${error.message}`,
-      );
-    }
+    ErrorService.handleError(error, "Failed to decode instruction");
   }
 }
