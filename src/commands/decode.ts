@@ -20,7 +20,7 @@
 
 import * as vscode from "vscode";
 import { RVCodecWrapper } from "../rvcodec-wrapper";
-import { HEX_PATTERNS } from "../constants";
+import { HEX_PATTERN } from "../constants";
 import { formatPlainText } from "../utils";
 
 export async function decodeCommand() {
@@ -39,14 +39,18 @@ export async function decodeCommand() {
     return;
   }
 
-  // Extract hex value from various formats
-  let hexValue = text.trim();
-  for (const pattern of HEX_PATTERNS) {
-    const match = hexValue.match(pattern);
-    if (match) {
-      hexValue = match[1];
-      break;
-    }
+  // Extract hex value from text
+  const match = text.trim().match(HEX_PATTERN);
+  if (!match) {
+    vscode.window.showErrorMessage("No valid hexadecimal instruction found");
+    return;
+  }
+
+  // Find the first non-undefined capture group (the hex value)
+  const hexValue = match.slice(1).find(group => group !== undefined)?.replace(/_/g, "");
+  if (!hexValue) {
+    vscode.window.showErrorMessage("No valid hexadecimal instruction found");
+    return;
   }
 
   try {

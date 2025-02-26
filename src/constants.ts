@@ -18,9 +18,5 @@
  * The source code is available at: https://github.com/hankhsu1996/vscode-rvcodec-js
  */
 
-// Regex patterns for different hex formats
-export const HEX_PATTERNS = [
-  /\b0x([0-9A-Fa-f]{8})\b/, // Standard hex (0x...)
-  /32'h([0-9A-Fa-f]{8})\b/, // Verilog format
-  /'h([0-9A-Fa-f]{8})\b/, // SystemVerilog format
-];
+// Single regex pattern for all hex formats using alternation
+export const HEX_PATTERN = /\b(?:0x([0-9A-Fa-f]{8})|32'h([0-9A-Fa-f_]{1,8})|'h([0-9A-Fa-f]{8}))\b/;

@@ -24,6 +24,7 @@ import * as vscode from "vscode";
 import { encodeCommand } from "./commands/encode";
 import { decodeCommand } from "./commands/decode";
 import { registerHoverProvider } from "./hover-provider";
+import { registerInlineDecoder } from "./inline-decoder";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -36,8 +37,11 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand("rvcodec-js.encode", encodeCommand),
     vscode.commands.registerCommand("rvcodec-js.decode", decodeCommand),
-    registerHoverProvider(),
+    registerHoverProvider()
   );
+
+  // Register inline decoder
+  registerInlineDecoder();
 }
 
 // This method is called when your extension is deactivated

@@ -20,12 +20,12 @@
 
 import * as vscode from "vscode";
 import { RVCodecWrapper } from "./rvcodec-wrapper";
-import { HEX_PATTERNS } from "./constants";
+import { HEX_PATTERN } from "./constants";
 import { formatMarkdown } from "./utils";
 
 export function registerHoverProvider() {
   return vscode.languages.registerHoverProvider(
-    ["systemverilog", "verilog", "c", "cpp"],
+    "*",
     {
       async provideHover(
         document: vscode.TextDocument,
@@ -43,17 +43,17 @@ export function registerHoverProvider() {
           return;
         }
 
-        // Try each hex pattern
-        for (const pattern of HEX_PATTERNS) {
-          const match = line.match(pattern);
-          if (
-            match &&
-            line
-              .slice(wordRange.start.character, wordRange.end.character)
-              .includes(match[1])
-          ) {
+        const match = line.match(HEX_PATTERN);
+        if (match) {
+          const word = line.slice(wordRange.start.character, wordRange.end.character);
+          // Check if the word at cursor is part of the matched hex pattern
+          if (match[0].includes(word)) {
+            // Find the first non-undefined capture group (the hex value)
+            const hexValue = match.slice(1).find(group => group !== undefined)?.replace(/_/g, "");
+            if (!hexValue) return;
+
             try {
-              const decoded = await RVCodecWrapper.decode(match[1]);
+              const decoded = await RVCodecWrapper.decode(hexValue);
               return new vscode.Hover(formatMarkdown(decoded));
             } catch (error) {
               // Invalid instruction - no hover
