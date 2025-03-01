@@ -49,30 +49,21 @@
         "rvcodec-js.useAbiNames": {
           "type": "boolean",
           "default": false,
-          "description": "Use ABI register names (a0, sp) instead of numeric names (x10, x2)"
+          "description": "Use ABI names (a0, sp) instead of numeric names (x10, x2)"
         }
       }
     },
     "commands": [
       {
-        "command": "rvcodec-js.encode",
-        "title": "RISC-V: Encode Instruction"
-      },
-      {
-        "command": "rvcodec-js.decode",
-        "title": "RISC-V: Decode Instruction"
+        "command": "rvcodec-js.showDetails",
+        "title": "RISC-V: Show Instruction Details"
       }
     ],
     "menus": {
       "editor/context": [
         {
           "when": "editorHasSelection",
-          "command": "rvcodec-js.encode",
-          "group": "1_modification"
-        },
-        {
-          "when": "editorHasSelection",
-          "command": "rvcodec-js.decode",
+          "command": "rvcodec-js.showDetails",
           "group": "1_modification"
         }
       ]

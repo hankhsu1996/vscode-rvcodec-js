@@ -25,7 +25,7 @@ import { formatPlainText } from "../utils";
 import { ErrorService } from "../services/error";
 import { extractHexValue } from "../utils";
 
-export async function decodeCommand() {
+export async function showDetailsCommand() {
   const editor = vscode.window.activeTextEditor;
   if (!editor) {
     return;
@@ -35,30 +35,37 @@ export async function decodeCommand() {
   const text = editor.document.getText(selection);
 
   if (!text) {
-    ErrorService.showInfo("Please select a hexadecimal instruction to decode");
+    ErrorService.showInfo("Please select a RISC-V instruction or hex value");
     return;
   }
 
-  // Extract hex value from text
+  // First try to decode if it's a hex value
   const match = text.trim().match(HEX_PATTERN);
-  if (!match) {
-    ErrorService.showInfo("No valid hexadecimal instruction found");
-    return;
+  if (match) {
+    const hexValue = extractHexValue(match);
+    if (hexValue) {
+      try {
+        const decoded = await RVCodecWrapper.decode(hexValue);
+        const outputChannel =
+          vscode.window.createOutputChannel("RISC-V Details");
+        outputChannel.clear();
+        outputChannel.appendLine(formatPlainText(decoded, "Decoding"));
+        outputChannel.show(true);
+        return;
+      } catch (error) {
+        // If decoding fails, try encoding instead
+      }
+    }
   }
 
-  const hexValue = extractHexValue(match);
-  if (!hexValue) {
-    ErrorService.showInfo("No valid hexadecimal instruction found");
-    return;
-  }
-
+  // If not a hex value or decoding failed, try encoding
   try {
-    const decoded = await RVCodecWrapper.decode(hexValue);
-    const outputChannel = vscode.window.createOutputChannel("RISC-V Decoder");
+    const encoded = await RVCodecWrapper.encode(text.trim());
+    const outputChannel = vscode.window.createOutputChannel("RISC-V Details");
     outputChannel.clear();
-    outputChannel.appendLine(formatPlainText(decoded, "Decoding"));
+    outputChannel.appendLine(formatPlainText(encoded, "Encoding"));
     outputChannel.show(true);
   } catch (error) {
-    ErrorService.handleError(error, "Failed to decode instruction");
+    ErrorService.handleError(error, "Failed to process instruction");
   }
 }

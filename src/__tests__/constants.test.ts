@@ -39,7 +39,9 @@ describe("HEX_PATTERN", () => {
       const match = pattern.match(HEX_PATTERN);
       expect(match).not.toBeNull();
       // Check if one of the capture groups contains the hex value
-      const hexValue = match?.slice(1).find((group: string | undefined) => group !== undefined);
+      const hexValue = match
+        ?.slice(1)
+        .find((group: string | undefined) => group !== undefined);
       expect(hexValue).toMatch(/^[0-9A-Fa-f]{8}$/);
     });
   });

@@ -21,8 +21,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
-import { encodeCommand } from "./commands/encode";
-import { decodeCommand } from "./commands/decode";
+import { showDetailsCommand } from "./commands/show-details";
 import { registerHoverProvider } from "./hover-provider";
 import { registerInlineDecoder } from "./inline-decoder";
 
@@ -35,8 +34,10 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Register commands
   context.subscriptions.push(
-    vscode.commands.registerCommand("rvcodec-js.encode", encodeCommand),
-    vscode.commands.registerCommand("rvcodec-js.decode", decodeCommand),
+    vscode.commands.registerCommand(
+      "rvcodec-js.showDetails",
+      showDetailsCommand,
+    ),
     registerHoverProvider(),
   );
 

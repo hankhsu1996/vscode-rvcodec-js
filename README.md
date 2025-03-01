@@ -4,21 +4,24 @@ Instantly encode RISC-V assembly instructions and decode hexadecimal machine cod
 
 ## Features
 
-### 💡 Inline Decoding
-See assembly instructions next to hex values in real-time. Skips commented lines and supports all hex formats. Disabled by default, enable via `rvcodec-js.enableInlineDecoding`.
+### ⚡ Quick Command
+Select text and right-click (or use command palette) to show instruction details:
+- For hex values: Shows the decoded assembly instruction
+- For assembly: Shows the encoded hex value
+Results appear in the output panel with detailed information.
 
-### 🔍 Hover to Decode
-Hover over hex values to see assembly instruction, format, and ISA details. Supports standard hex and SystemVerilog formats. Disabled by default, enable via `rvcodec-js.enableHover`.
+### 💡 Inline Decoding (Off by default)
+See assembly instructions next to hex values in real-time. Skips commented lines and supports all hex formats.
+Enable via `rvcodec-js.enableInlineDecoding`.
 
-### ⚡ Quick Commands
-Select text and right-click to:
-- Encode: Assembly → hex, binary, and format details
-- Decode: Hex → assembly, binary, and format details
+### 🔍 Hover to Decode (Off by default)
+Hover over hex values to see assembly instruction, format, and ISA details. Supports standard hex and SystemVerilog formats.
+Enable via `rvcodec-js.enableHover`.
 
 ## Settings
 
-- `rvcodec-js.enableHover`: Enable/disable instruction decoding on hover (default: false)
 - `rvcodec-js.enableInlineDecoding`: Enable/disable inline assembly decoding (default: false)
+- `rvcodec-js.enableHover`: Enable/disable instruction decoding on hover (default: false)
 - `rvcodec-js.useAbiNames`: Use ABI names (a0, sp) instead of numeric (x10, x2) (default: false)
 
 ## Installation

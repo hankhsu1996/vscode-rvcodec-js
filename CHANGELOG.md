@@ -8,6 +8,7 @@
 
 ### Changed
 - Hover feature is now disabled by default for better performance
+- Combined encode and decode commands into a single "Show Details" command
 
 ## [0.0.3] - 2025-02-26
 

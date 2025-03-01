@@ -32,7 +32,9 @@ export class ConfigurationService {
   }
 
   static get isInlineDecodingEnabled(): boolean {
-    return this.getConfiguration().get<boolean>("enableInlineDecoding") ?? false;
+    return (
+      this.getConfiguration().get<boolean>("enableInlineDecoding") ?? false
+    );
   }
 
   static get useAbiNames(): boolean {
