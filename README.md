@@ -5,7 +5,7 @@ Instantly encode RISC-V assembly instructions and decode hexadecimal machine cod
 ## Features
 
 ### 💡 Inline Decoding
-See assembly instructions next to hex values in real-time. Skips commented lines and supports all hex formats. Enabled by default.
+See assembly instructions next to hex values in real-time. Skips commented lines and supports all hex formats. Disabled by default, enable via `rvcodec-js.enableInlineDecoding`.
 
 ### 🔍 Hover to Decode
 Hover over hex values to see assembly instruction, format, and ISA details. Supports standard hex and SystemVerilog formats. Disabled by default, enable via `rvcodec-js.enableHover`.
@@ -18,7 +18,7 @@ Select text and right-click to:
 ## Settings
 
 - `rvcodec-js.enableHover`: Enable/disable instruction decoding on hover (default: false)
-- `rvcodec-js.enableInlineDecoding`: Enable/disable inline assembly decoding (default: true)
+- `rvcodec-js.enableInlineDecoding`: Enable/disable inline assembly decoding (default: false)
 - `rvcodec-js.useAbiNames`: Use ABI names (a0, sp) instead of numeric (x10, x2) (default: false)
 
 ## Installation

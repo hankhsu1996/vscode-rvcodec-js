@@ -43,7 +43,7 @@
         },
         "rvcodec-js.enableInlineDecoding": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Enable inline decoding of RISC-V instructions"
         },
         "rvcodec-js.useAbiNames": {
