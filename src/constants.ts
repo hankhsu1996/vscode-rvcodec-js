@@ -20,4 +20,4 @@
 
 // Single regex pattern for all hex formats using alternation
 export const HEX_PATTERN =
-  /\b(?:0x([0-9A-Fa-f]{8})|32'h([0-9A-Fa-f_]{1,8})|'h([0-9A-Fa-f]{8}))\b/;
+  /(?:\b0x([0-9A-Fa-f]{8})|(?:\b32'h)([0-9A-Fa-f]{8})|(?<![0-9])'h([0-9A-Fa-f]{8})|\b([0-9A-Fa-f]{8}))\b(?<!'h)/;
